@@ -6,7 +6,6 @@ function resizeCanvas() {
     backgroundCanvas.height = window.innerHeight;
 }
 
-let lineProgress = 0;
 let lines = [];
 
 function draw() {
@@ -39,15 +38,15 @@ function draw() {
         let endX;
         let endY;
 
-        if (lineProgress < 0.5) {
+        if (lines[i].progress < 0.5) {
             startX = lines[i].startX;
             startY = lines[i].startY;
-            endX = lines[i].startX + (lines[i].endX - lines[i].startX) * (lineProgress * 2);
-            endY = lines[i].startY + (lines[i].endY - lines[i].startY) * (lineProgress * 2);
+            endX = lines[i].startX + (lines[i].endX - lines[i].startX) * (lines[i].progress * 2);
+            endY = lines[i].startY + (lines[i].endY - lines[i].startY) * (lines[i].progress * 2);
         }
         else {
-            startX = lines[i].startX + (lines[i].endX - lines[i].startX) * ((lineProgress - 0.5) * 2);
-            startY = lines[i].startY + (lines[i].endY - lines[i].startY) * ((lineProgress - 0.5) * 2);
+            startX = lines[i].startX + (lines[i].endX - lines[i].startX) * ((lines[i].progress - 0.5) * 2);
+            startY = lines[i].startY + (lines[i].endY - lines[i].startY) * ((lines[i].progress - 0.5) * 2);
             endX = lines[i].endX;
             endY = lines[i].endY;
         }
@@ -58,18 +57,19 @@ function draw() {
         ctx.strokeStyle = "#5c5c5c";
         ctx.strokeWidth = 2;
         ctx.stroke();
-    }
 
-    lineProgress += 0.001;
-    if (lineProgress > 1) {
-        lineProgress = 0;
-        const newLines = [];
-        for (let i = 0; i < lines.length; i++) {
+        let a = lines[i].startX - lines[i].endX;
+        let b = lines[i].startY - lines[i].endY;
+        lines[i].progress += 0.001 + ((Math.sqrt(a * a + b * b) / backgroundCanvas.width) * 0.002);
+        if (lines[i].progress > 1) {
+            lines[i].progress = 0;
             const scrambledDots = dots.sort(() => Math.random() - 0.5);
             const end = scrambledDots[0];
-            newLines.push(new Line(lines[i].endX, lines[i].endY, end[0], end[1]));
+            lines[i].startX = lines[i].endX;
+            lines[i].startY = lines[i].endY;
+            lines[i].endX = end[0];
+            lines[i].endY = end[1];
         }
-        lines = newLines;
     }
     window.requestAnimationFrame(draw);
 }
@@ -85,5 +85,6 @@ class Line {
         this.startY = startY;
         this.endX = endX;
         this.endY = endY;
+        this.progress = 0;
     }
 }
