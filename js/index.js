@@ -7,18 +7,18 @@ function resizeCanvas() {
 }
 
 let lineProgress = 0;
-let lines = []
+let lines = [];
 
 function draw() {
     ctx.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
 
     let dots = [];
 
-    for (let x = 50; x < backgroundCanvas.width; x += 50) {
-        for (let y = 50; y < backgroundCanvas.height; y += 50) {
+    for (let x = 50; x < backgroundCanvas.width - 50; x += 100) {
+        for (let y = 50; y < backgroundCanvas.height - 50; y += 100) {
             ctx.beginPath();
-            ctx.arc(x, y, 5, 0, Math.PI * 2);
-            ctx.fillStyle = "#424242";
+            ctx.arc(x, y, 3, 0, Math.PI * 2);
+            ctx.fillStyle = "#5c5c5c";
             ctx.fill();
             dots.push([x, y]);
         }
@@ -41,13 +41,21 @@ function draw() {
         const endY = lines[i].startY + (lines[i].endY - lines[i].startY) * lineProgress;
 
         ctx.lineTo(endX, endY);
+        ctx.strokeStyle = "#5c5c5c";
+        ctx.strokeWidth = 2;
         ctx.stroke();
     }
 
-    lineProgress += 0.01;
+    lineProgress += 0.001;
     if (lineProgress > 1) {
         lineProgress = 0;
-        lines = []
+        const newLines = [];
+        for (let i = 0; i < lines.length; i++) {
+            const scrambledDots = dots.sort(() => Math.random() - 0.5);
+            const end = scrambledDots[0];
+            newLines.push(new Line(lines[i].endX, lines[i].endY, end[0], end[1]));
+        }
+        lines = newLines;
     }
     window.requestAnimationFrame(draw);
 }
