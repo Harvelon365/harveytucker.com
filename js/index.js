@@ -54,10 +54,20 @@ function setupDots() {
 
 function getNeighbour(dot) {
     const neighbours = [];
-    if (dot.row > 0) neighbours.push(dots[(dot.row - 1) * (setupDots.cols + 1) + dot.col]);
-    if (dot.row < setupDots.rows) neighbours.push(dots[(dot.row + 1) * (setupDots.cols + 1) + dot.col]);
-    if (dot.col > 0) neighbours.push(dots[dot.row * (setupDots.cols + 1) + (dot.col - 1)]);
-    if (dot.col < setupDots.cols) neighbours.push(dots[dot.row * (setupDots.cols + 1) + (dot.col + 1)]);
+
+    function findDot(r, c) {
+        return dots.find(d => d.row === r && d.col === c);
+    }
+
+    if (dot.row > 0) neighbours.push(findDot(dot.row - 1, dot.col));
+    if (dot.row < setupDots.rows) neighbours.push(findDot(dot.row + 1, dot.col));
+    if (dot.col > 0) neighbours.push(findDot(dot.row, dot.col - 1));
+    if (dot.col < setupDots.cols) neighbours.push(findDot(dot.row, dot.col + 1));
+
+    if (dot.row > 0 && dot.col > 0) neighbours.push(findDot(dot.row - 1, dot.col - 1));
+    if (dot.row > 0 && dot.col < setupDots.cols) neighbours.push(findDot(dot.row - 1, dot.col + 1));
+    if (dot.row < setupDots.rows && dot.col > 0) neighbours.push(findDot(dot.row + 1, dot.col - 1));
+    if (dot.row < setupDots.rows && dot.col < setupDots.cols) neighbours.push(findDot(dot.row + 1, dot.col + 1));
 
     return neighbours[Math.floor(Math.random() * neighbours.length)];
 }
