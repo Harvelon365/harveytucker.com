@@ -34,12 +34,26 @@ function draw() {
     }
 
     for (let i = 0; i < lines.length; i++) {
+        let startX;
+        let startY;
+        let endX;
+        let endY;
+
+        if (lineProgress < 0.5) {
+            startX = lines[i].startX;
+            startY = lines[i].startY;
+            endX = lines[i].startX + (lines[i].endX - lines[i].startX) * (lineProgress * 2);
+            endY = lines[i].startY + (lines[i].endY - lines[i].startY) * (lineProgress * 2);
+        }
+        else {
+            startX = lines[i].startX + (lines[i].endX - lines[i].startX) * ((lineProgress - 0.5) * 2);
+            startY = lines[i].startY + (lines[i].endY - lines[i].startY) * ((lineProgress - 0.5) * 2);
+            endX = lines[i].endX;
+            endY = lines[i].endY;
+        }
+
         ctx.beginPath();
-        ctx.moveTo(lines[i].startX, lines[i].startY);
-
-        const endX = lines[i].startX + (lines[i].endX - lines[i].startX) * lineProgress;
-        const endY = lines[i].startY + (lines[i].endY - lines[i].startY) * lineProgress;
-
+        ctx.moveTo(startX, startY);
         ctx.lineTo(endX, endY);
         ctx.strokeStyle = "#5c5c5c";
         ctx.strokeWidth = 2;
