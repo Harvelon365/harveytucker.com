@@ -98,7 +98,7 @@ function draw() {
     }
 
     if (lines.length === 0) {
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < 30; i++) {
             const scrambledDots = dots.sort(() => Math.random() - 0.5);
             const start = scrambledDots[0];
             const end = getNeighbour(start);
