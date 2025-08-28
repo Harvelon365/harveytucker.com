@@ -139,5 +139,7 @@ function draw() {
     window.requestAnimationFrame(draw);
 }
 
+backgroundCanvas.width = window.innerWidth * 2;
+backgroundCanvas.height = window.innerHeight * 2;
 setupDots();
 window.requestAnimationFrame(draw);
