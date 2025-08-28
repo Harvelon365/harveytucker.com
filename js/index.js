@@ -3,6 +3,8 @@ const ctx = backgroundCanvas.getContext("2d");
 
 class Dot {
     constructor(posX, posY) {
+        this.currX = posX;
+        this.currY = posY;
         this.originX = posX;
         this.originY = posY;
         this.startX = posX;
@@ -49,10 +51,12 @@ function draw() {
         ctx.arc(posX, posY, 3, 0, Math.PI * 2);
         ctx.fillStyle = "#5c5c5c";
         ctx.fill();
+        dot.currX = posX;
+        dot.currY = posY;
 
         let a = dot.startX - dot.endX;
         let b = dot.startY - dot.endY;
-        dot.progress += 0.01 + ((Math.sqrt(a * a + b * b) / 20) * 0.02);
+        dot.progress += 0.01 / Math.sqrt(a * a + b * b);
         if (dot.progress > 1) {
             dot.progress = 0;
             dot.startX = dot.endX;
