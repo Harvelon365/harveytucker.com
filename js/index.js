@@ -3,10 +3,13 @@ const ctx = backgroundCanvas.getContext("2d");
 
 class Dot {
     constructor(posX, posY) {
+        this.originX = posX;
+        this.originY = posY;
         this.startX = posX;
         this.startY = posY;
-        this.posX = posX;
-        this.posY = posY;
+        this.endX = 0;
+        this.endY = 0;
+        this.progress = 1;
     }
 }
 
@@ -40,12 +43,23 @@ function draw() {
     ctx.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
 
     for (const dot of dots) {
-        dot.posX = Math.min(Math.max(dot.posX + Math.random() * 4 - 2, dot.startX - 10), dot.startX + 10);
-        dot.posY = Math.min(Math.max(dot.posY + Math.random() * 4 - 2, dot.startY - 10), dot.startY + 10);
+        let posX = dot.startX + (dot.endX - dot.startX) * dot.progress;
+        let posY = dot.startY + (dot.endY - dot.startY) * dot.progress;
         ctx.beginPath();
-        ctx.arc(dot.posX, dot.posY, 3, 0, Math.PI * 2);
+        ctx.arc(posX, posY, 3, 0, Math.PI * 2);
         ctx.fillStyle = "#5c5c5c";
         ctx.fill();
+
+        let a = dot.startX - dot.endX;
+        let b = dot.startY - dot.endY;
+        dot.progress += 0.01 + ((Math.sqrt(a * a + b * b) / 20) * 0.02);
+        if (dot.progress > 1) {
+            dot.progress = 0;
+            dot.startX = dot.endX;
+            dot.startY = dot.endY;
+            dot.endX = dot.originX + Math.random() * 20 - 10;
+            dot.endY = dot.originY + Math.random() * 20 - 10;
+        }
     }
 
     if (lines.length === 0) {
