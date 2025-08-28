@@ -101,7 +101,7 @@ function draw() {
 
         let a = lines[i].startDot.currX - lines[i].endDot.currX;
         let b = lines[i].startDot.currY - lines[i].endDot.currY;
-        lines[i].progress += 0.05 / Math.sqrt(a * a + b * b);
+        lines[i].progress += 0.25 / Math.sqrt(a * a + b * b);
         if (lines[i].progress > 1) {
             lines[i].progress = 0;
             const scrambledDots = dots.sort(() => Math.random() - 0.5);
