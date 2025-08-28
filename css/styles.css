@@ -6,7 +6,9 @@ body {
 #background-canvas {
     position: fixed;
     touch-action: none;
-    top: 0;
-    left: 0;
+    top: -1000px;
+    left: -1000px;
+    width: calc(200% + 200px);
+    height: calc(200% + 200px);
     z-index: -1;
 }

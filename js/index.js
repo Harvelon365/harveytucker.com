@@ -25,11 +25,6 @@ class Line {
     }
 }
 
-function resizeCanvas() {
-    backgroundCanvas.width = window.innerWidth;
-    backgroundCanvas.height = window.innerHeight;
-}
-
 let dots = [];
 let lines = [];
 
@@ -98,7 +93,7 @@ function draw() {
     }
 
     if (lines.length === 0) {
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < setupDots.cols * 2; i++) {
             const scrambledDots = dots.sort(() => Math.random() - 0.5);
             const start = scrambledDots[0];
             const end = getNeighbour(start);
@@ -143,9 +138,6 @@ function draw() {
     }
     window.requestAnimationFrame(draw);
 }
-
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
 
 setupDots();
 window.requestAnimationFrame(draw);
