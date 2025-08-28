@@ -6,21 +6,27 @@ function resizeCanvas() {
     backgroundCanvas.height = window.innerHeight;
 }
 
+let dots = [];
 let lines = [];
+
+function setupDots() {
+    for (let x = 50; x < backgroundCanvas.width - 50; x += 100) {
+        for (let y = 50; y < backgroundCanvas.height - 50; y += 100) {
+            dots.push(new Dot(x, y));
+        }
+    }
+}
 
 function draw() {
     ctx.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
 
-    let dots = [];
-
-    for (let x = 50; x < backgroundCanvas.width - 50; x += 100) {
-        for (let y = 50; y < backgroundCanvas.height - 50; y += 100) {
-            ctx.beginPath();
-            ctx.arc(x, y, 3, 0, Math.PI * 2);
-            ctx.fillStyle = "#5c5c5c";
-            ctx.fill();
-            dots.push([x, y]);
-        }
+    for (const dot of dots) {
+        dot.posX = Math.min(Math.max(dot.posX + Math.random() * 4 - 2, dot.startX - 10), dot.startX + 10);
+        dot.posY = Math.min(Math.max(dot.posY + Math.random() * 4 - 2, dot.startY - 10), dot.startY + 10);
+        ctx.beginPath();
+        ctx.arc(dot.posX, dot.posY, 3, 0, Math.PI * 2);
+        ctx.fillStyle = "#5c5c5c";
+        ctx.fill();
     }
 
     if (lines.length === 0) {
@@ -78,6 +84,15 @@ window.addEventListener("resize", resizeCanvas);
 window.requestAnimationFrame(draw);
 
 resizeCanvas();
+
+class Dot {
+    constructor(posX, posY) {
+        this.startX = posX;
+        this.startY = posY;
+        this.posX = posX;
+        this.posY = posY;
+    }
+}
 
 class Line {
     constructor(startX, startY, endX, endY) {
