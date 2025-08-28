@@ -13,6 +13,8 @@ function draw() {
     ctx.arc(50, 50, 30, 0, Math.PI * 2);
     ctx.fillStyle = "#FFF";
     ctx.fill();
+
+    window.requestAnimationFrame(draw);
 }
 
 window.addEventListener("resize", resizeCanvas);
