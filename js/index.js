@@ -93,7 +93,7 @@ function draw() {
     }
 
     if (lines.length === 0) {
-        for (let i = 0; i < setupDots.cols * 2; i++) {
+        for (let i = 0; i < setupDots.cols * 5; i++) {
             const scrambledDots = dots.sort(() => Math.random() - 0.5);
             const start = scrambledDots[0];
             const end = getNeighbour(start);
