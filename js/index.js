@@ -81,9 +81,10 @@ function draw() {
 }
 
 window.addEventListener("resize", resizeCanvas);
-window.requestAnimationFrame(draw);
-
 resizeCanvas();
+
+setupDots();
+window.requestAnimationFrame(draw);
 
 class Dot {
     constructor(posX, posY) {
