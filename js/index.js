@@ -2,7 +2,7 @@ const backgroundCanvas = document.getElementById("background-canvas");
 const ctx = backgroundCanvas.getContext("2d");
 
 class Dot {
-    constructor(posX, posY) {
+    constructor(posX, posY, row, column) {
         this.currX = posX;
         this.currY = posY;
         this.originX = posX;
@@ -11,6 +11,8 @@ class Dot {
         this.startY = posY;
         this.endX = posX;
         this.endY = posY;
+        this.row = row;
+        this.col = column;
         this.progress = 1;
     }
 }
@@ -32,11 +34,32 @@ let dots = [];
 let lines = [];
 
 function setupDots() {
-    for (let x = 50; x < backgroundCanvas.width - 50; x += 100) {
-        for (let y = 50; y < backgroundCanvas.height - 50; y += 100) {
-            dots.push(new Dot(x, y));
+
+    const spacing = 100;
+    const offset = 50;
+    const cols = Math.floor((backgroundCanvas.width - offset * 2) / spacing);
+    const rows = Math.floor((backgroundCanvas.height - offset * 2) / spacing);
+
+    for (let row = 0; row <= rows; row++) {
+        for (let col = 0; col <= cols; col++) {
+            const x = offset + col * spacing;
+            const y = offset + row * spacing;
+            dots.push(new Dot(x, y, row, col));
         }
     }
+
+    setupDots.rows = rows;
+    setupDots.cols = cols;
+}
+
+function getNeighbour(dot) {
+    const neighbours = [];
+    if (dot.row > 0) neighbours.push(dots[(dot.row - 1) * (setupDots.cols + 1) + dot.col]);
+    if (dot.row < setupDots.rows) neighbours.push(dots[(dot.row + 1) * (setupDots.cols + 1) + dot.col]);
+    if (dot.col > 0) neighbours.push(dots[dot.row * (setupDots.cols + 1) + (dot.col - 1)]);
+    if (dot.col < setupDots.cols) neighbours.push(dots[dot.row * (setupDots.cols + 1) + (dot.col + 1)]);
+
+    return neighbours[Math.floor(Math.random() * neighbours.length)];
 }
 
 function draw() {
@@ -104,10 +127,8 @@ function draw() {
         lines[i].progress += 0.25 / Math.sqrt(a * a + b * b);
         if (lines[i].progress > 1) {
             lines[i].progress = 0;
-            const scrambledDots = dots.sort(() => Math.random() - 0.5);
-            const end = scrambledDots[0];
             lines[i].startDot = lines[i].endDot;
-            lines[i].endDot = end;
+            lines[i].endDot = getNeighbour(lines[i].startDot);
         }
     }
     window.requestAnimationFrame(draw);
