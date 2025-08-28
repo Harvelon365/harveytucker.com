@@ -9,8 +9,8 @@ class Dot {
         this.originY = posY;
         this.startX = posX;
         this.startY = posY;
-        this.endX = 0;
-        this.endY = 0;
+        this.endX = posX;
+        this.endY = posY;
         this.progress = 1;
     }
 }
