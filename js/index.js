@@ -1,6 +1,25 @@
 const backgroundCanvas = document.getElementById("background-canvas");
 const ctx = backgroundCanvas.getContext("2d");
 
+class Dot {
+    constructor(posX, posY) {
+        this.startX = posX;
+        this.startY = posY;
+        this.posX = posX;
+        this.posY = posY;
+    }
+}
+
+class Line {
+    constructor(startX, startY, endX, endY) {
+        this.startX = startX;
+        this.startY = startY;
+        this.endX = endX;
+        this.endY = endY;
+        this.progress = 0;
+    }
+}
+
 function resizeCanvas() {
     backgroundCanvas.width = window.innerWidth;
     backgroundCanvas.height = window.innerHeight;
@@ -85,22 +104,3 @@ resizeCanvas();
 
 setupDots();
 window.requestAnimationFrame(draw);
-
-class Dot {
-    constructor(posX, posY) {
-        this.startX = posX;
-        this.startY = posY;
-        this.posX = posX;
-        this.posY = posY;
-    }
-}
-
-class Line {
-    constructor(startX, startY, endX, endY) {
-        this.startX = startX;
-        this.startY = startY;
-        this.endX = endX;
-        this.endY = endY;
-        this.progress = 0;
-    }
-}
