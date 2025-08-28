@@ -16,11 +16,9 @@ class Dot {
 }
 
 class Line {
-    constructor(startX, startY, endX, endY) {
-        this.startX = startX;
-        this.startY = startY;
-        this.endX = endX;
-        this.endY = endY;
+    constructor(startDot, endDot) {
+        this.startDot = startDot;
+        this.endDot = endDot;
         this.progress = 0;
     }
 }
@@ -71,7 +69,7 @@ function draw() {
             const scrambledDots = dots.sort(() => Math.random() - 0.5);
             const start = scrambledDots[0];
             const end = scrambledDots[1];
-            lines.push(new Line(start[0], start[1], end[0], end[1]));
+            lines.push(new Line(start, end));
         }
     }
 
@@ -82,16 +80,16 @@ function draw() {
         let endY;
 
         if (lines[i].progress < 0.5) {
-            startX = lines[i].startX;
-            startY = lines[i].startY;
-            endX = lines[i].startX + (lines[i].endX - lines[i].startX) * (lines[i].progress * 2);
-            endY = lines[i].startY + (lines[i].endY - lines[i].startY) * (lines[i].progress * 2);
+            startX = lines[i].startDot.currX;
+            startY = lines[i].startDot.currY;
+            endX = lines[i].startDot.currX + (lines[i].endDot.currX - lines[i].startDot.currX) * (lines[i].progress * 2);
+            endY = lines[i].startDot.currY + (lines[i].endDot.currY - lines[i].startDot.currY) * (lines[i].progress * 2);
         }
         else {
-            startX = lines[i].startX + (lines[i].endX - lines[i].startX) * ((lines[i].progress - 0.5) * 2);
-            startY = lines[i].startY + (lines[i].endY - lines[i].startY) * ((lines[i].progress - 0.5) * 2);
-            endX = lines[i].endX;
-            endY = lines[i].endY;
+            startX = lines[i].startDot.currX + (lines[i].endDot.currX - lines[i].startDot.currX) * ((lines[i].progress - 0.5) * 2);
+            startY = lines[i].startDot.currY + (lines[i].endDot.currY - lines[i].startDot.currY) * ((lines[i].progress - 0.5) * 2);
+            endX = lines[i].endDot.currX;
+            endY = lines[i].endDot.currY;
         }
 
         ctx.beginPath();
@@ -101,17 +99,15 @@ function draw() {
         ctx.strokeWidth = 2;
         ctx.stroke();
 
-        let a = lines[i].startX - lines[i].endX;
-        let b = lines[i].startY - lines[i].endY;
+        let a = lines[i].startDot.currX - lines[i].endDot.currX;
+        let b = lines[i].startDot.currY - lines[i].endDot.currY;
         lines[i].progress += 0.05 / Math.sqrt(a * a + b * b);
         if (lines[i].progress > 1) {
             lines[i].progress = 0;
             const scrambledDots = dots.sort(() => Math.random() - 0.5);
             const end = scrambledDots[0];
-            lines[i].startX = lines[i].endX;
-            lines[i].startY = lines[i].endY;
-            lines[i].endX = end[0];
-            lines[i].endY = end[1];
+            lines[i].startDot = lines[i].endDot;
+            lines[i].endDot = end;
         }
     }
     window.requestAnimationFrame(draw);
