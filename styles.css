@@ -4,7 +4,7 @@
 }
 
 html {
-    /* animation: scroll-lock calc(var(--print-delay) + var(--print-time)); */
+    animation: scroll-lock calc(var(--print-delay) + var(--print-time));
 }
 
 @keyframes scroll-lock {
@@ -51,7 +51,7 @@ header p {
     font-family: "PT Serif", serif;
     font-weight: 400;
     font-style: normal;
-    /* animation: print-paper var(--print-time) var(--print-delay) both; */
+    animation: print-paper var(--print-time) var(--print-delay) both;
 }
 
 @keyframes print-paper {
