@@ -9,7 +9,6 @@ fetch("projects.json")
         return response.json();
     })
     .then(data => {
-        console.log(data);
         data.sort((a, b) => new Date(b["sorting-date"]) - new Date(a["sorting-date"]));
         data.forEach(p => {
             const titleDiv = document.createElement("div");
