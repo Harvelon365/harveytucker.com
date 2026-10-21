@@ -1,0 +1,26 @@
+{
+    "sections": {
+        "me": "I am currently a 4th year student at the University of Nottingham for a MSci Computer Science degree. I have a passion for game development and software engineering and decided to make this website to summarise what I have been working on. Checkout my GitHub and LinkedIn pages at the bottom of the site and scroll through the list of projects that I am involved in. Feel free to reach out over email if you have any questions.",
+        "projects": "A list of the latest projects I have undertaken. The full code-base and in-depth documentation for most of them can be found on my GitHub profile. The projects are displayed newest first."
+    },
+    "projects": [
+        {
+            "title": "HackNotts24 - HTM1",
+            "sorting-date": "2024-10-26",
+            "display-date": "26-27th October 2024",
+            "description": "HTM1 is an esoteric programming language designed to look like HTML, loosely inspired by languages like Whitespace and Shakespeare. Valid HTM1 is mostly valid HTML allowing almost all HTM1 files to be displayed in most modern browsers with limited formatting damage. HTM1 was created in less than 24 hours for HackNotts24. The language uses each HTML element's class and id tags to store command opcodes and parameters which are then read using the python interpreter to feed into a stack-based turing machine. Basic control structures were also included alongside the ability to import external HTM1 code into the current program to allow for more complex computation. CSS can also be utilised to cause basic HTML elements that don't form part of the program and are just there for browser appearance, to be ignored by the interpreter. The GitHub repo provides detailed instructions on how to install and run the interpreter as well as some example files (one that prints 'hello world' and another that checks if a given number is prime) to see how the language functions."
+        },
+        {
+            "title": "HackNotts25 - NYTWizard",
+            "sorting-date": "2025-10-25",
+            "display-date": "25-26th October 2025",
+            "description": "The NYT Wizard shall solve any of the New York Times games (except the ones that it can't). It was developed as part of HackNotts25 and works using a (admittedly rather janky) server backend combined with a Firefox web extension. Not only will it solve the Spelling Bee, Wordle, Tiles and Sodoku, it will also utilise the web extension to type and click on the page to input the correct answer and make the right moves. While a solver for Pips was created, it only works consistently on the easy puzzles and (due to web extension limitations) can't physically solve the puzzle for you - therefore only the backend exists. Sodoku and Spelling Bee were the easiest games to solve as sodoku solvers have already existed for a while and the list of valid words for the Spelling Bee can be downloaded from the website resources then filtered for all valid guesses. The Wordle solver is crude and could be improved if our group had a knowledge of information theory. Due to this being a group effort, each individual solver is its own program written in various languages and run by the webserver when required."
+        },
+        {
+            "title": "This Website",
+            "sorting-date": "2026-10-21",
+            "display-date": "21st October 2026",
+            "description": "Constructed using HTML, CSS and JS this website serves as a portfolio of all my work and a central hub for my contact links. The site is hosted using nginx and protected using NPM and Cloudflare. The main content of the page is built when it loads using JS where all section descriptions and project entries are loaded from a JSON file and converted into HTML elements. This allows new projects to be added and sections to be updated without the need to directly update the HTML layout while also keeping the raw layout clean."
+        }
+    ]
+}
