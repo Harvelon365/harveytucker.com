@@ -1,0 +1,115 @@
+:root {
+    --print-delay: 0.3s;
+    --print-time: 2s;
+}
+
+html {
+    animation: scroll-lock calc(var(--print-delay) + var(--print-time));
+}
+
+@keyframes scroll-lock {
+    from, to {
+        overflow: hidden;
+    }
+}
+
+body {
+    margin: 0;
+    background: #212121;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    margin: clamp(0.85cm, 4vw, 1.9cm);
+    text-align: center;
+    color: snow;
+    font-family: "Courier Prime", monospace;
+}
+
+header h1 {
+    font-size: 1.5cm;
+    font-weight: 400;
+    font-style: normal;
+}
+
+header p {
+    font-size: 0.5cm;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#paper {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: min(24.8cm, 90%);
+    margin: 0 auto;
+    padding: clamp(0.85cm, 4vw, 1.9cm);
+    background: snow;
+    box-shadow: 0 8px 16px 0 black, 0 12px 40px 0 black;
+    font-family: "PT Serif", serif;
+    font-weight: 400;
+    font-style: normal;
+    /* animation: print-paper var(--print-time) var(--print-delay) both; */
+}
+
+@keyframes print-paper {
+    0% {
+        transform: translateY(100vh);
+        animation-timing-function: steps(20, end);
+    }
+    80% {
+        transform: translateY(5cm);
+        animation-timing-function: linear;
+    }
+    94% {
+        transform: translateY(5cm);
+        animation-timing-function: cubic-bezier(0.2, 0, 0.1, 1);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html,
+    #paper {
+        animation: none;
+    }
+}
+
+#paper h2 {
+    margin-top: 0;
+    margin-bottom: 20px
+}
+
+#paper p {
+    margin: 0;
+}
+
+hr {
+    width: 75%;
+    margin: 20px auto;
+}
+
+hr.solid {
+    border: 1px solid transparent;
+    border-image: linear-gradient(to right, snow, lightgrey, snow);
+    border-image-slice: 1;
+}
+
+a {
+    color: black;
+}
+
+#cv-link {
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.5em;
+    flex-wrap: wrap;
+}
+
+.subtext {
+    color: grey;
+}
